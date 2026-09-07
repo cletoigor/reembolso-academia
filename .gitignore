@@ -1,0 +1,8 @@
+.env
+chrome-dedicado/
+chrome-profile/
+enviados.json
+cron.log
+__pycache__/
+*.pyc
+.DS_Store
