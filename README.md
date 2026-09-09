@@ -1,8 +1,19 @@
 # reembolso-academia
 
 A personal automation that submits a monthly gym-membership reimbursement
-claim to Revelo via their Google Form, so it doesn't have to be filled in by
+claim to an employer via their Google Form, so it doesn't have to be filled in by
 hand every month.
+
+## Architecture
+
+![Architecture](docs/architecture.svg)
+
+The thing worth noticing: launchd does not run a Python script here — it runs an agent.
+`run.sh` invokes `claude -p` with a fixed MCP tool allowlist, and `ptax.py` and
+`enviar_dedicado.py` are that agent's tools. Two gates are enforced in code (the
+`enviados.json` idempotency check and `anexo_presente()`, which verifies the upload
+actually attached); the USD cap is enforced only in the agent's prose, which is why it
+is drawn as a soft gate.
 
 ## What it does
 

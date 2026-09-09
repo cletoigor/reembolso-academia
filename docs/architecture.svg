@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1560" height="1526" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 1526" role="img" aria-label="At day 16, 11:30, launchd runs run.sh, which invokes claude -p as the orchestrating agent with a fixed MCP allowlist. The agent lane searches Gmail for the NFS-e receipt (read-only), extracts the BRL amount, shells to ptax.py for the BCB PTAX rate, and applies a USD 20 cap that is enforced only in the agent's procedure text, not in code — a soft gate. The agent then shells to enviar_dedicado.py, which first checks enviados.json for the current month (a hard idempotency gate) before touching the browser. If the session is alive, it fills the Google Form via the dedicated Chrome profile, uploads the receipt through the Google Picker iframe, and only submits once anexo_presente confirms the file chip actually appears — a second hard gate. A retired script, enviar_perfil_real.py, once used the real personal Chrome profile and logged the operator out of everything in July 2026; it is drawn as a dead, disconnected path. If parede_de_login detects a Google sign-in wall, the run stops, emits SESSAO_EXPIRADA, DMs the operator on Slack instead of failing silently, and waits on a manual login_dedicado.py recovery that never types a password and confirms session cookies both live and on disk. On a successful submission the agent notifies the approver on Slack and logs a completed event on Google Calendar.">
+<style>
+/* Tokens inlined from the page stylesheet so this file stands alone. */
+svg {
+--ground:#F1F3EF;
+    --surface:#FDFDFB;
+    --surface-2:#E9ECE6;
+    --ink:#171B18;
+    --muted:#5D6862;
+    --line:#C3CBC2;
+    --line-soft:#DDE2DA;
+
+    --signal:#0F7B80;   --signal-bg:#E2EFEE;    /* compute / assets      */
+    --store:#9A6716;    --store-bg:#F4EBDA;     /* storage / datasets    */
+    --logic:#3A6446;    --logic-bg:#E4EDE4;     /* pure logic            */
+    --client:#35548C;   --client-bg:#E3EAF4;    /* UIs / consumers       */
+    --interlock:#A8351F;--interlock-bg:#F6E6E1; /* gated write path      */
+    --gate:#55468A;     --gate-bg:#EAE6F3;      /* soft gate / policy    */
+
+    --lane-a:#E9EDE8;
+    --lane-b:#E4EFEF;
+    --lane-c:#F2EBDD;
+    --lane-d:#E7EDE7;
+    --lane-e:#E5EAF2;
+    --lane-f:#EFE9E6;
+}
+/* Google Fonts cannot load inside a GitHub-rendered SVG; the stacks below
+   already name generic fallbacks, which is what readers will actually see. */
+</style>
+
+
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--muted)"/>
+          </marker>
+          <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--interlock)"/>
+          </marker>
+          <marker id="lg-ah" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--muted)"/>
+          </marker>
+          <marker id="lg-ahr" viewBox="0 0 10 10" refX="9" refY="5"
+                  markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--interlock)"/>
+          </marker>
+        </defs>
+
+        <!-- ============ LANE 1 — SCHEDULE (y 0-150) ============ -->
+        <rect x="0" y="0" width="1560" height="150" fill="var(--lane-a)"/>
+        <line x1="0" y1="150" x2="1560" y2="150" stroke="var(--line)" stroke-width="1"/>
+        <text x="14" y="70" font-family="Archivo, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Schedule</text>
+        <text x="14" y="86" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--muted)">plist / run.sh</text>
+
+        <rect x="180" y="55" width="180" height="60" rx="2" fill="var(--signal-bg)" stroke="var(--signal)" stroke-width="1.4"/>
+        <text x="190" y="78" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--ink)">launchd</text>
+        <text x="190" y="94" font-family="Source Serif 4, serif" font-size="9.5" fill="var(--muted)">day 16, 11:30</text>
+        <text x="190" y="106" font-family="Source Serif 4, serif" font-size="9.5" fill="var(--muted)">StartCalendarInterval</text>
+
+        <rect x="440" y="55" width="200" height="60" rx="2" fill="var(--signal-bg)" stroke="var(--signal)" stroke-width="1.4"/>
+        <text x="450" y="78" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--ink)">run.sh</text>
+        <text x="450" y="94" font-family="Source Serif 4, serif" font-size="9.5" fill="var(--muted)">HOME + PATH override,</text>
+        <text x="450" y="106" font-family="Source Serif 4, serif" font-size="9.5" fill="var(--muted)">stdout+stderr → cron.log</text>
+
+        <rect x="720" y="48" width="330" height="74" rx="2" fill="var(--signal-bg)" stroke="var(--signal)" stroke-width="1.4"/>
+        <text x="730" y="70" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700" fill="var(--ink)">claude -p "Execute /reembolso-academia..."</text>
+        <text x="730" y="86" font-family="Source Serif 4, serif" font-size="9.5" fill="var(--muted)">the "script" is an agent, not code —</text>
+        <text x="730" y="99" font-family="Source Serif 4, serif" font-size="9.5" fill="var(--muted)">--allowedTools fixes its MCP surface:</text>
+        <text x="730" y="112" font-family="JetBrains Mono, monospace" font-size="8" fill="var(--muted)">Bash · Read · WebSearch · WebFetch · Gmail search/get · Slack search/send · Calendar create/list</text>
+
+        <path d="M 100 85 H 175" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+        <path d="M 360 85 H 435" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+        <path d="M 640 85 H 715" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- ============ LANE 2 — AGENT ORCHESTRATION (y 150-460) ============ -->
+        <rect x="0" y="150" width="1560" height="310" fill="var(--lane-b)"/>
+        <line x1="0" y1="460" x2="1560" y2="460" stroke="var(--line)" stroke-width="1"/>
+        <text x="14" y="172" font-family="Archivo, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Agent orchestration</text>
+        <text x="14" y="188" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--muted)">/reembolso-academia</text>
+        <rect x="12" y="207" width="120" height="12" fill="var(--lane-b)"/>
+        <text x="14" y="217" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">the real orchestrator</text>
+
+        <!-- Gmail read (dashed) -->
+        <rect x="180" y="168" width="180" height="56" rx="2" fill="var(--client-bg)" stroke="var(--client)" stroke-width="1.4"/>
+        <text x="190" y="188" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Gmail search_threads</text>
+        <text x="190" y="202" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">"academia" newer_than:30d,</text>
+        <text x="190" y="214" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">get_thread → NFS-e HTML</text>
+
+        <rect x="400" y="168" width="150" height="56" rx="2" fill="var(--logic-bg)" stroke="var(--logic)" stroke-width="1.4"/>
+        <text x="410" y="188" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">extract R$</text>
+        <text x="410" y="204" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">value from the note</text>
+        <text x="410" y="216" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">table field, in prose</text>
+
+        <path d="M 100 196 H 175" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+        <path d="M 360 196 H 395" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+
+        <!-- Bash → ptax.py -->
+        <rect x="600" y="168" width="150" height="56" rx="2" fill="var(--signal-bg)" stroke="var(--signal)" stroke-width="1.4"/>
+        <text x="610" y="188" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Bash → ptax.py</text>
+        <text x="610" y="204" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">tool call, not an</text>
+        <text x="610" y="216" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">import — shells out</text>
+        <path d="M 550 196 H 595" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- USD cap — soft gate -->
+        <rect x="800" y="160" width="230" height="72" rx="2" fill="var(--gate-bg)" stroke="var(--gate)" stroke-width="1.6"/>
+        <text x="810" y="180" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--gate)">GATE · USD 20 cap</text>
+        <text x="810" y="196" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">soft — lives only in the skill's</text>
+        <text x="810" y="208" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">prose ("aplicar o teto automatica-</text>
+        <text x="810" y="220" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">mente"), never checked in code</text>
+        <path d="M 750 196 H 795" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- dry-run then real -->
+        <rect x="1080" y="160" width="220" height="80" rx="2" fill="var(--signal-bg)" stroke="var(--signal)" stroke-width="1.4"/>
+        <text x="1090" y="180" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Bash → enviar_dedicado.py</text>
+        <text x="1090" y="196" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">first <tspan font-family="JetBrains Mono, monospace">--dry-run</tspan> (checks login</text>
+        <text x="1090" y="208" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">+ fields, no upload/submit),</text>
+        <text x="1090" y="220" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">then the real call with --valor</text>
+        <text x="1090" y="232" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">--comprovante --headless</text>
+        <path d="M 1030 196 H 1075" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- Slack DM stale-skill note box -->
+        <rect x="1330" y="160" width="210" height="90" rx="2" fill="var(--surface-2)" stroke="var(--line)" stroke-width="1.2"/>
+        <text x="1340" y="178" font-family="Archivo, sans-serif" font-size="10.5" font-weight="600" fill="var(--ink)">Divergent plugin skill</text>
+        <text x="1340" y="194" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">SKILL.md (browser-driven,</text>
+        <text x="1340" y="206" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">claude-in-chrome) is a stale</text>
+        <text x="1340" y="218" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">variant — run.sh's allowlist</text>
+        <text x="1340" y="230" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">grants none of its tools; it</text>
+        <text x="1340" y="242" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">never actually runs.</text>
+
+        <!-- Status enum strip -->
+        <rect x="180" y="270" width="1360" height="52" rx="2" fill="var(--surface)" stroke="var(--line)" stroke-width="1.2"/>
+        <text x="196" y="290" font-family="Archivo, sans-serif" font-size="10" font-weight="600" fill="var(--ink)">emit() status vocabulary, read by the agent to decide the next step:</text>
+        <rect x="192" y="298" width="700" height="13" fill="var(--surface)"/>
+        <text x="196" y="308" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--muted)">JA_ENVIADO · PERFIL_INEXISTENTE · SESSAO_EXPIRADA · DRY_RUN_OK · CAMPOS_INSUFICIENTES · ABORTADO_SEM_UPLOAD · ENVIADO · INCERTO</text>
+        <path d="M 1190 235 V 265" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- Branch: JA_ENVIADO exits here -->
+        <rect x="180" y="360" width="230" height="66" rx="2" fill="var(--store-bg)" stroke="var(--store)" stroke-width="1.4"/>
+        <text x="190" y="380" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">JA_ENVIADO → stop</text>
+        <text x="190" y="396" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">cron.log, 2026-08-16: correctly</text>
+        <text x="190" y="408" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">refused to resend an already-</text>
+        <text x="190" y="420" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">sent month; no Slack, no Calendar</text>
+        <path d="M 200 322 V 355" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- Halo label for the fork -->
+        <rect x="400" y="336" width="30" height="13" fill="var(--surface)"/>
+        <text x="415" y="346" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="var(--muted)">fork</text>
+
+        <!-- ============ LANE 3 — PYTHON TOOLS (y 460-830) ============ -->
+        <rect x="0" y="460" width="1560" height="370" fill="var(--lane-c)"/>
+        <line x1="0" y1="830" x2="1560" y2="830" stroke="var(--line)" stroke-width="1"/>
+        <text x="14" y="482" font-family="Archivo, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Python tools</text>
+        <text x="14" y="498" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--muted)">the agent's shell-outs</text>
+
+        <!-- ptax.py -->
+        <rect x="600" y="472" width="180" height="70" rx="2" fill="var(--signal-bg)" stroke="var(--signal)" stroke-width="1.4"/>
+        <text x="610" y="492" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">ptax.py</text>
+        <text x="610" y="508" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">BCB olinda CotacaoDolarDia,</text>
+        <text x="610" y="520" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">walks back MAX_DIAS=7 past</text>
+        <text x="610" y="532" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">weekends/holidays</text>
+        <path d="M 675 240 V 467" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+        <rect x="720" y="248" width="90" height="13" fill="var(--surface)"/>
+        <text x="765" y="258" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="var(--muted)">python3 ptax.py</text>
+
+        <!-- shared-by-copy dashed note -->
+        <rect x="820" y="472" width="220" height="70" rx="2" fill="var(--surface)" stroke="var(--line)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="830" y="492" font-family="Archivo, sans-serif" font-size="10" font-weight="600" fill="var(--muted)">/nf-mensal (elsewhere)</text>
+        <text x="830" y="508" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">holds its own copy of the</text>
+        <text x="830" y="520" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">same PTAX logic — shared by</text>
+        <text x="830" y="532" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">copy, not by import</text>
+        <path d="M 780 507 H 815" fill="none" stroke="var(--muted)" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+
+        <!-- enviar_dedicado.py hard gate: ja_enviado -->
+        <rect x="1080" y="464" width="240" height="60" rx="2" fill="var(--interlock-bg)" stroke="var(--interlock)" stroke-width="1.7"/>
+        <text x="1090" y="484" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--interlock)">GATE 1 · ja_enviado(mes)</text>
+        <text x="1090" y="500" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">hard gate, checked in code before</text>
+        <text x="1090" y="512" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">any browser is touched</text>
+        <path d="M 1200 240 V 459" fill="none" stroke="var(--interlock)" stroke-width="2" marker-end="url(#ahr)"/>
+        <rect x="1225" y="330" width="60" height="13" fill="var(--surface)"/>
+        <text x="1255" y="340" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="var(--interlock)">GATE 1</text>
+
+        <!-- parede_de_login check -->
+        <rect x="1080" y="556" width="240" height="60" rx="2" fill="var(--gate-bg)" stroke="var(--gate)" stroke-width="1.5"/>
+        <text x="1090" y="576" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">parede_de_login(page)</text>
+        <text x="1090" y="592" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">title/URL keywords detect a</text>
+        <text x="1090" y="604" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">Google sign-in wall</text>
+        <path d="M 1200 524 V 551" fill="none" stroke="var(--interlock)" stroke-width="2" marker-end="url(#ahr)"/>
+
+        <!-- Chrome-dedicado box (moved earlier in flow order, feeds forward into gates) -->
+        <rect x="460" y="608" width="200" height="64" rx="2" fill="var(--client-bg)" stroke="var(--client)" stroke-width="1.4"/>
+        <text x="470" y="628" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Chrome (channel=chrome)</text>
+        <text x="470" y="644" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">chrome-dedicado/ profile,</text>
+        <text x="470" y="656" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">anti-detection flags set</text>
+
+        <!-- forward rail: Chrome opened → feeds GATE 2's fill/upload -->
+        <path d="M 660 640 H 900 V 684 H 1075" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+        <rect x="720" y="622" width="150" height="13" fill="var(--lane-c)"/>
+        <text x="795" y="632" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="var(--muted)">page used by GATE 2</text>
+
+        <!-- FILL_JS + upload -->
+        <rect x="1080" y="648" width="240" height="72" rx="2" fill="var(--interlock-bg)" stroke="var(--interlock)" stroke-width="1.7"/>
+        <text x="1090" y="668" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--interlock)">GATE 2 · anexo_presente()</text>
+        <rect x="1088" y="676" width="220" height="12" fill="var(--interlock-bg)"/>
+        <text x="1090" y="684" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">FILL_JS fills first 4 visible fields,</text>
+        <text x="1090" y="696" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">upload() via Picker iframe, then</text>
+        <text x="1090" y="708" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">verifies the filename chip in body —</text>
+        <text x="1090" y="717" font-family="Source Serif 4, serif" font-size="8" fill="var(--muted)">added after the Aug-2026 silent-upload break</text>
+        <path d="M 1200 616 V 643" fill="none" stroke="var(--interlock)" stroke-width="2" marker-end="url(#ahr)"/>
+        <rect x="1225" y="622" width="60" height="13" fill="var(--surface)"/>
+        <text x="1255" y="632" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="var(--interlock)">GATE 2</text>
+
+        <!-- submit -->
+        <rect x="1080" y="750" width="240" height="60" rx="2" fill="var(--interlock-bg)" stroke="var(--interlock)" stroke-width="1.7"/>
+        <text x="1090" y="770" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--interlock)">CHECKBOX_SUBMIT_JS</text>
+        <rect x="1088" y="778" width="230" height="12" fill="var(--interlock-bg)"/>
+        <text x="1090" y="786" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">ticks consent, clicks Submit —</text>
+        <text x="1090" y="798" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">success = body has recorded/registrada/…</text>
+        <path d="M 1200 720 V 745" fill="none" stroke="var(--interlock)" stroke-width="2" marker-end="url(#ahr)"/>
+
+        <!-- Deprecated dead box: enviar_perfil_real.py -->
+        <rect x="180" y="600" width="240" height="80" rx="2" fill="var(--surface-2)" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.72"/>
+        <text x="190" y="622" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--muted)" text-decoration="line-through">enviar_perfil_real.py</text>
+        <text x="190" y="638" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">retired — used the operator's real personal</text>
+        <text x="190" y="650" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">Chrome profile, logged him out of</text>
+        <text x="190" y="662" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">everything in Jul/2026. File now</text>
+        <text x="190" y="674" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">hard-exits with a warning; not called.</text>
+
+        <!-- ============ LANE 4 — STORAGE (y 830-1030) ============ -->
+        <rect x="0" y="830" width="1560" height="200" fill="var(--lane-d)"/>
+        <line x1="0" y1="1030" x2="1560" y2="1030" stroke="var(--line)" stroke-width="1"/>
+        <text x="14" y="852" font-family="Archivo, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Storage</text>
+        <text x="14" y="868" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--muted)">local files</text>
+
+        <!-- chrome-dedicado profile cylinder — aligned under the Chrome box (x460-660) so its
+             feed is a pure vertical, no backward horizontal run -->
+        <ellipse cx="560" cy="960" rx="80" ry="9" fill="var(--surface)" stroke="var(--store)" stroke-width="1.4"/>
+        <rect x="480" y="900" width="160" height="60" fill="var(--surface)" stroke="none"/>
+        <line x1="480" y1="900" x2="480" y2="960" stroke="var(--store)" stroke-width="1.4"/>
+        <line x1="640" y1="900" x2="640" y2="960" stroke="var(--store)" stroke-width="1.4"/>
+        <ellipse cx="560" cy="900" rx="80" ry="9" fill="var(--store-bg)" stroke="var(--store)" stroke-width="1.4"/>
+        <text x="560" y="925" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">chrome-dedicado/</text>
+        <text x="560" y="940" text-anchor="middle" font-family="Source Serif 4, serif" font-size="8.5" fill="var(--muted)">persistent user-data-dir,</text>
+        <text x="560" y="951" text-anchor="middle" font-family="Source Serif 4, serif" font-size="8.5" fill="var(--muted)">the live Google session</text>
+        <path d="M 560 680 V 886" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <!-- cron.log cylinder — column x=1045 clears both the GATE·USD-cap box (ends x=1030)
+             and the /nf-mensal note box (ends x=1040) above it, so the feed is a pure vertical -->
+        <ellipse cx="1045" cy="960" rx="80" ry="9" fill="var(--surface)" stroke="var(--store)" stroke-width="1.4"/>
+        <rect x="965" y="900" width="160" height="60" fill="var(--surface)" stroke="none"/>
+        <line x1="965" y1="900" x2="965" y2="960" stroke="var(--store)" stroke-width="1.4"/>
+        <line x1="1125" y1="900" x2="1125" y2="960" stroke="var(--store)" stroke-width="1.4"/>
+        <ellipse cx="1045" cy="900" rx="80" ry="9" fill="var(--store-bg)" stroke="var(--store)" stroke-width="1.4"/>
+        <text x="1045" y="925" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">cron.log</text>
+        <text x="1045" y="940" text-anchor="middle" font-family="Source Serif 4, serif" font-size="8.5" fill="var(--muted)">StandardOut + StandardErr,</text>
+        <text x="1045" y="951" text-anchor="middle" font-family="Source Serif 4, serif" font-size="8.5" fill="var(--muted)">every run's transcript</text>
+        <path d="M 1045 122 V 886" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+
+        <!-- enviados.json cylinder — moved to x1320-1480, the free corridor to the right of the
+             stacked GATE 1 / parede_de_login / GATE 2 / submit column, so its read/write edges
+             exit those boxes' own right edges and run forward (right, then down) — never
+             leftward and never through the middle of an unrelated box -->
+        <ellipse cx="1400" cy="960" rx="80" ry="9" fill="var(--surface)" stroke="var(--store)" stroke-width="1.4"/>
+        <rect x="1320" y="900" width="160" height="60" fill="var(--surface)" stroke="none"/>
+        <line x1="1320" y1="900" x2="1320" y2="960" stroke="var(--store)" stroke-width="1.4"/>
+        <line x1="1480" y1="900" x2="1480" y2="960" stroke="var(--store)" stroke-width="1.4"/>
+        <ellipse cx="1400" cy="900" rx="80" ry="9" fill="var(--store-bg)" stroke="var(--store)" stroke-width="1.4"/>
+        <text x="1400" y="925" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">enviados.json</text>
+        <text x="1400" y="940" text-anchor="middle" font-family="Source Serif 4, serif" font-size="8.5" fill="var(--muted)">YYYY-MM → enviado_em,</text>
+        <text x="1400" y="951" text-anchor="middle" font-family="Source Serif 4, serif" font-size="8.5" fill="var(--muted)">valor_usd, comprovante, headless</text>
+        <path d="M 1318 494 V 820 H 1388 V 886" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+        <rect x="1330" y="843" width="90" height="13" fill="var(--surface)"/>
+        <text x="1375" y="853" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8.5" fill="var(--muted)">read: ja_enviado</text>
+
+        <path d="M 1320 780 H 1420 V 886" fill="none" stroke="var(--store)" stroke-width="1.6" marker-end="url(#ah)"/>
+        <text x="1500" y="878" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="var(--store)">write: registrar()</text>
+
+        <!-- ============ LANE 5 — RECOVERY (y 1030-1220) ============ -->
+        <rect x="0" y="1030" width="1560" height="190" fill="var(--lane-e)"/>
+        <line x1="0" y1="1220" x2="1560" y2="1220" stroke="var(--line)" stroke-width="1"/>
+        <text x="14" y="1052" font-family="Archivo, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Recovery</text>
+        <text x="14" y="1068" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--muted)">manual, never automated</text>
+
+        <rect x="1080" y="1046" width="240" height="60" rx="2" fill="var(--interlock-bg)" stroke="var(--interlock)" stroke-width="1.6"/>
+        <text x="1090" y="1066" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--interlock)">SESSAO_EXPIRADA emitted</text>
+        <text x="1090" y="1082" font-family="Source Serif 4, serif" font-size="9" fill="var(--ink)">known standing failure mode</text>
+        <path d="M 1200 616 V 636 H 700 V 1076 H 1075" fill="none" stroke="var(--interlock)" stroke-width="2" marker-end="url(#ahr)"/>
+
+        <rect x="1330" y="1130" width="210" height="72" rx="2" fill="var(--client-bg)" stroke="var(--client)" stroke-width="1.4"/>
+        <text x="1340" y="1150" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">login_dedicado.py</text>
+        <text x="1340" y="1166" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">opens accounts.google.com —</text>
+        <text x="1340" y="1178" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">the operator types the password,</text>
+        <text x="1340" y="1190" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">Claude never does</text>
+        <path d="M 1200 1106 V 1166 H 1325" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <rect x="780" y="1130" width="210" height="72" rx="2" fill="var(--surface)" stroke="var(--line)" stroke-width="1.3"/>
+        <text x="790" y="1150" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="var(--ink)">cookie confirmation</text>
+        <text x="790" y="1166" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">polls context.cookies() up to</text>
+        <text x="790" y="1178" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">10 min, then copies Default/</text>
+        <text x="790" y="1190" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">Cookies SQLite to verify on-disk</text>
+
+        <!-- ============ LANE 6 — NOTIFY / CLOSE-OUT (y 1220-1420) ============ -->
+        <rect x="0" y="1220" width="1560" height="200" fill="var(--lane-f)"/>
+        <line x1="0" y1="1420" x2="1560" y2="1420" stroke="var(--line)" stroke-width="1"/>
+        <text x="14" y="1242" font-family="Archivo, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Notify / close-out</text>
+        <text x="14" y="1258" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--muted)">Slack + Calendar MCP</text>
+
+        <rect x="180" y="1244" width="220" height="70" rx="2" fill="var(--client-bg)" stroke="var(--client)" stroke-width="1.4"/>
+        <text x="190" y="1264" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Slack → the approver</text>
+        <text x="190" y="1280" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">on ENVIADO: amount in R$ / USD</text>
+        <text x="190" y="1292" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">notified via slack_send_message</text>
+        <path d="M 1200 810 V 826 H 740 V 1230 H 290 V 1239" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+        <rect x="845" y="819" width="70" height="12" fill="var(--surface)"/>
+        <text x="880" y="828" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="var(--muted)">on ENVIADO</text>
+
+        <rect x="440" y="1244" width="220" height="70" rx="2" fill="var(--client-bg)" stroke="var(--client)" stroke-width="1.4"/>
+        <text x="450" y="1264" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Calendar → create_event</text>
+        <text x="450" y="1280" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">"✅ Reembolso enviado" logged</text>
+        <text x="450" y="1292" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">only after Slack confirmation</text>
+        <path d="M 400 1279 H 435" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <rect x="1080" y="1244" width="240" height="80" rx="2" fill="var(--client-bg)" stroke="var(--client)" stroke-width="1.4"/>
+        <text x="1090" y="1264" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Slack → the operator DM</text>
+        <text x="1090" y="1280" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">"não falhar calado" — the exact</text>
+        <text x="1090" y="1292" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">fix for the Jul-2026 silent-</text>
+        <text x="1090" y="1304" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">failure incident</text>
+        <path d="M 1200 1106 V 1239" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+        <rect x="1330" y="1244" width="220" height="70" rx="2" fill="var(--client-bg)" stroke="var(--client)" stroke-width="1.4"/>
+        <text x="1340" y="1264" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--ink)">Calendar → reminder event</text>
+        <text x="1340" y="1280" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">"⚠️ Relogar automação..." —</text>
+        <text x="1340" y="1292" font-family="Source Serif 4, serif" font-size="9" fill="var(--muted)">deadline stays visible: day 25</text>
+        <path d="M 1300 1279 H 1325" fill="none" stroke="var(--muted)" stroke-width="1.5" marker-end="url(#ah)"/>
+
+      
+<rect x="0" y="1480.0" width="1560.0" height="46" fill="var(--surface)"/>
+<line x1="0" y1="1480.0" x2="1560.0" y2="1480.0" stroke="var(--line)" stroke-width="1"/>
+<text x="14" y="1508.0" font-family="Archivo, sans-serif" font-size="12" font-weight="700" fill="var(--ink)">Legend</text>
+<line x1="90" y1="1503.0" x2="124" y2="1503.0" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#ah)"/>
+<text x="134" y="1507.0" font-family="Source Serif 4, serif" font-size="11.5" fill="var(--muted)">data / control flow</text>
+<line x1="274.0" y1="1503.0" x2="308.0" y2="1503.0" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+<text x="318.0" y="1507.0" font-family="Source Serif 4, serif" font-size="11.5" fill="var(--muted)">read-only access</text>
+<line x1="440.0" y1="1503.0" x2="474.0" y2="1503.0" stroke="var(--interlock)" stroke-width="2.2" marker-end="url(#ah)"/>
+<text x="484.0" y="1507.0" font-family="Source Serif 4, serif" font-size="11.5" fill="var(--muted)">can affect the outside world — gated</text>
+<ellipse cx="743.0" cy="1503.0" rx="17" ry="5" fill="var(--store-bg)" stroke="var(--store)" stroke-width="1.4"/>
+<text x="770.0" y="1507.0" font-family="Source Serif 4, serif" font-size="11.5" fill="var(--muted)">stored data</text>
+<rect x="862.0" y="1495.0" width="34" height="16" rx="2" fill="var(--gate-bg)" stroke="var(--gate)" stroke-width="1.3" stroke-dasharray="3 2"/>
+<text x="906.0" y="1507.0" font-family="Source Serif 4, serif" font-size="11.5" fill="var(--muted)">retired / dead path</text>
+</svg>
